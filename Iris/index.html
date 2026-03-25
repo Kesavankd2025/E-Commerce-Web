@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IRIS | The Ethereal Atelier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#6250ae",
+              "primary-container": "#c5b8ff",
+              "on-primary": "#fcf7ff",
+              "on-surface": "#313236",
+              "on-surface-variant": "#5e5f62",
+              "surface-container": "#eeedf0",
+              "surface-container-low": "#f4f3f5",
+              "surface-container-high": "#e8e8eb",
+              "outline-variant": "#b1b2b5",
+              "secondary-container": "#f7e1d7",
+              "on-secondary-container": "#5f5049",
+            },
+            fontFamily: {
+              headline: ["Manrope", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
