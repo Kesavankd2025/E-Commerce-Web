@@ -1,0 +1,249 @@
+/* --- Checkout Page Styles --- */
+.checkout-main {
+  padding-top: 100px;
+  min-height: 80vh;
+  margin-bottom: 80px;
+}
+
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 60px;
+}
+
+@media (min-width: 1024px) {
+  .checkout-container {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+.checkout-header {
+  margin-bottom: 40px;
+}
+
+.checkout-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #313236;
+  margin-bottom: 8px;
+}
+
+.checkout-secure-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #2E7D32;
+  font-weight: 500;
+}
+
+.checkout-block {
+  margin-bottom: 40px;
+}
+
+.checkout-block-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #313236;
+  margin-bottom: 16px;
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.checkout-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #313236;
+  font-family: "Inter", sans-serif;
+  background: #ffffff;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.checkout-input.half {
+  width: 100%;
+}
+
+.checkout-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(241, 64, 100, 0.1);
+}
+
+.checkout-input::placeholder {
+  color: #b1b2b5;
+}
+
+.payment-block {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid rgba(177, 178, 181, 0.2);
+}
+
+.payment-subtitle {
+  font-size: 14px;
+  color: #5e5f62;
+  margin-bottom: 24px;
+}
+
+.payment-card-box {
+  background: #fbf9fb;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.checkout-submit-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: opacity 0.2s ease;
+}
+
+.checkout-submit-btn:hover {
+  opacity: 0.9;
+}
+
+.checkout-return-btn {
+  background: none;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #5e5f62;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.checkout-return-btn:hover {
+  color: #313236;
+}
+
+.checkout-sidebar {
+  background: #f4f3f5;
+  border-radius: 12px;
+  padding: 32px;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.checkout-summary-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #313236;
+  margin-bottom: 24px;
+}
+
+.checkout-items {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.checkout-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.checkout-item-img-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(177, 178, 181, 0.2);
+}
+
+.checkout-item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.checkout-item-qty {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #5e5f62;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.checkout-item-info {
+  flex-grow: 1;
+}
+
+.checkout-item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #313236;
+  margin-bottom: 4px;
+}
+
+.checkout-item-variant {
+  font-size: 13px;
+  color: #5e5f62;
+}
+
+.checkout-item-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: #313236;
+}
+
+.checkout-totals {
+  border-top: 1px solid rgba(177, 178, 181, 0.2);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkout-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: #5e5f62;
+}
+
+.checkout-final-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: #313236;
+  margin-top: 8px;
+}
