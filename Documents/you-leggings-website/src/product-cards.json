@@ -1,0 +1,266 @@
+[
+  {
+    "category": "Premium Collection",
+    "name": "Premium Essence Set",
+    "price": "INR 1,299",
+    "meta": "",
+    "image": "/images/new-products/IMG_9066.jpg",
+    "alt": "Premium Essence Set"
+  },
+  {
+    "category": "Ankle Length",
+    "name": "Nude Comfort Ankle",
+    "price": "INR 549",
+    "meta": "",
+    "image": "/images/Nude Comfort Ankle/_DSC8045-Edit.jpg",
+    "alt": "Nude Comfort Ankle Legging"
+  },
+  {
+    "category": "Active Legging",
+    "name": "Cobalt Core Legging",
+    "price": "INR 599",
+    "meta": "",
+    "image": "/images/Cobalt Core Legging/_DSC8962.jpg",
+    "alt": "Cobalt Core Legging"
+  },
+  {
+    "category": "Gym Wear",
+    "name": "Aqua Flex Active",
+    "price": "INR 649",
+    "meta": "",
+    "image": "/images/Aqua Flex Active/_DSC9026-Edit.jpg",
+    "alt": "Aqua Flex Active Legging"
+  },
+  {
+    "category": "Lifestyle Set",
+    "name": "Neon Move Set",
+    "price": "INR 699",
+    "meta": "",
+    "image": "/images/Products/_DSC7885-Edit.jpg",
+    "alt": "Neon Move Set"
+  },
+  {
+    "category": "Performance",
+    "name": "Scarlet Sport Fit",
+    "price": "INR 629",
+    "meta": "",
+    "image": "/images/Products/_DSC7786-Edit.jpg",
+    "alt": "Scarlet Sport Fit"
+  },
+  {
+    "category": "Style Pair",
+    "name": "Floral Blush Pair",
+    "price": "INR 679",
+    "meta": "",
+    "image": "/images/Products/_DSC8785-Edit.jpg",
+    "alt": "Floral Blush Pair"
+  },
+  {
+    "category": "Essential Wear",
+    "name": "Olive Essential Set",
+    "price": "INR 639",
+    "meta": "",
+    "image": "/images/Products/_DSC7839-Edit.jpg",
+    "alt": "Olive Essential Set"
+  },
+  {
+    "category": "Kurti Legging",
+    "name": "Mint Aura Kurti Legging",
+    "price": "INR 569",
+    "meta": "",
+    "image": "/images/Products/_DSC8871-Edit.jpg",
+    "alt": "Mint Aura Kurti Legging"
+  },
+  {
+    "category": "Flare Bottom",
+    "name": "Indigo Flare Bottom",
+    "price": "INR 719",
+    "meta": "",
+    "image": "/images/Products/_DSC8659-Edit.jpg",
+    "alt": "Indigo Flare Bottom"
+  },
+  {
+    "category": "Kurti Fit",
+    "name": "Teal Grace Kurti Fit",
+    "price": "INR 589",
+    "meta": "",
+    "image": "/images/Products/_DSC7901-Edit.jpg",
+    "alt": "Teal Grace Kurti Fit"
+  },
+  {
+    "category": "Kurta Set",
+    "name": "Emerald Dot Kurta Set",
+    "price": "INR 739",
+    "meta": "",
+    "image": "/images/Products/_DSC7937-Edit.jpg",
+    "alt": "Emerald Dot Kurta Set"
+  },
+  {
+    "category": "Classic Pair",
+    "name": "Citrus Classic Set",
+    "price": "INR 689",
+    "meta": "",
+    "image": "/images/Products/_DSC8742-Edit.jpg",
+    "alt": "Citrus Classic Set"
+  },
+  {
+    "category": "Everyday Wear",
+    "name": "Orchid Everyday Kurti",
+    "price": "INR 619",
+    "meta": "",
+    "image": "/images/Products/_DSC8065-Edit.jpg",
+    "alt": "Orchid Everyday Kurti"
+  },
+  {
+    "category": "Co-ord Set",
+    "name": "Plum Luxe Co-ord",
+    "price": "INR 769",
+    "meta": "",
+    "image": "/images/Products/_DSC8116-Edit.jpg",
+    "alt": "Plum Luxe Co-ord"
+  },
+  {
+    "category": "Kurti Combo",
+    "name": "Mustard Gleam Kurti",
+    "price": "INR 659",
+    "meta": "",
+    "image": "/images/Products/_DSC8922.jpg",
+    "alt": "Mustard Gleam Kurti"
+  },
+  {
+    "category": "Festive Edit",
+    "name": "Ruby Festive Set",
+    "price": "INR 729",
+    "meta": "",
+    "image": "/images/Products/_DSC8810.jpg",
+    "alt": "Ruby Festive Set"
+  },
+  {
+    "category": "Tunic Set",
+    "name": "Crimson Asym Tunic",
+    "price": "INR 709",
+    "meta": "",
+    "image": "/images/Products/_DSC8352-Edit.jpg",
+    "alt": "Crimson Asym Tunic Set"
+  },
+  {
+    "category": "Lounge Set",
+    "name": "Ivory Print Lounge",
+    "price": "INR 579",
+    "meta": "",
+    "image": "/images/Products/_DSC8489-Edit.jpg",
+    "alt": "Ivory Print Lounge Set"
+  },
+  {
+    "category": "Daily Wear",
+    "name": "Sunrise Everyday Fit",
+    "price": "INR 609",
+    "meta": "",
+    "image": "/images/Products/_DSC8432-Edit.jpg",
+    "alt": "Sunrise Everyday Fit"
+  },
+  {
+    "category": "Ankle Length",
+    "name": "Coral Motion Pair",
+    "price": "INR 629",
+    "meta": "",
+    "image": "/images/Products/_DSC8510-Edit.jpg",
+    "alt": "Coral Motion Pair"
+  },
+  {
+    "category": "Active Legging",
+    "name": "Active Blue Flex",
+    "price": "INR 639",
+    "meta": "",
+    "image": "/images/Products/_DSC8533-Edit.jpg",
+    "alt": "Active Blue Flex"
+  },
+  {
+    "category": "Fashion Pair",
+    "name": "Cherry Street Edit",
+    "price": "INR 659",
+    "meta": "",
+    "image": "/images/Products/_DSC8587-Edit.jpg",
+    "alt": "Cherry Street Edit"
+  },
+  {
+    "category": "Full Length",
+    "name": "Azure Comfort Line",
+    "price": "INR 669",
+    "meta": "",
+    "image": "/images/Products/_DSC8716-Edit.jpg",
+    "alt": "Azure Comfort Line"
+  },
+  {
+    "category": "Classic Fit",
+    "name": "Classic Move Essential",
+    "price": "INR 589",
+    "meta": "",
+    "image": "/images/Products/_DSC8189.jpg",
+    "alt": "Classic Move Essential"
+  },
+  {
+    "category": "Premium Collection",
+    "name": "Premium Essence Set",
+    "price": "INR 1,299",
+    "meta": "",
+    "image": "/images/new-products/IMG_9066.jpg",
+    "alt": "Premium Essence Set"
+  },
+  {
+    "category": "Premium Collection",
+    "name": "Premium Essence Set",
+    "price": "INR 1,299",
+    "meta": "",
+    "image": "/images/new-products/IMG_9066.jpg",
+    "alt": "Premium Essence Set"
+  },
+  {
+    "category": "New Arrival",
+    "name": "Urban Motion",
+    "price": "INR 690",
+    "meta": "",
+    "image": "/images/Products/_DSC8742-Edit.jpg",
+    "alt": "Urban Motion"
+  },
+  {
+    "category": "New Arrival",
+    "name": "Daily Sculpt",
+    "price": "INR 620",
+    "meta": "",
+    "image": "/images/Products/_DSC8832.jpg",
+    "alt": "Daily Sculpt"
+  },
+  {
+    "category": "New Arrival",
+    "name": "Move Ease",
+    "price": "INR 560",
+    "meta": "",
+    "image": "/images/Products/_DSC8533-Edit.jpg",
+    "alt": "Move Ease"
+  },
+  {
+    "category": "New Arrival",
+    "name": "Street Soft",
+    "price": "INR 585",
+    "meta": "",
+    "image": "/images/Products/_DSC8128-Edit.jpg",
+    "alt": "Street Soft"
+  },
+  {
+    "category": "New Arrival",
+    "name": "Plum Drift",
+    "price": "INR 640",
+    "meta": "",
+    "image": "/images/Products/_DSC8910.jpg",
+    "alt": "Plum Drift"
+  },
+  {
+    "category": "New Arrival",
+    "name": "Rose Daywear",
+    "price": "INR 605",
+    "meta": "",
+    "image": "/images/Products/_DSC8752-Edit.jpg",
+    "alt": "Rose Daywear"
+  }
+]
