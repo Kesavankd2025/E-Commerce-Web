@@ -37,7 +37,7 @@ const CheckoutPage = ({ setPage, cartItems = [] }) => {
       key: "rzp_test_your_key_here", // Placeholder key for UI demo
       amount: total * 100, // Amount in paise
       currency: "INR",
-      name: "Velora Atelier",
+      name: "IRIS Atelier",
       description: "Order Processing",
       image: "https://lh3.googleusercontent.com/aida-public/...", // standard logo or blank
       handler: function (response) {
@@ -68,11 +68,11 @@ const CheckoutPage = ({ setPage, cartItems = [] }) => {
         {/* Left Side: Forms */}
         <div className="checkout-form-section">
           <div className="checkout-header">
-             <h1 className="checkout-title">Secure Checkout</h1>
-             <div className="checkout-secure-badge">
-               <Icon name="lock" style={{ fontSize: "16px", color: "#2E7D32" }} />
-               <span>256-bit SSL Encrypted</span>
-             </div>
+            <h1 className="checkout-title">Secure Checkout</h1>
+            <div className="checkout-secure-badge">
+              <Icon name="lock" style={{ fontSize: "16px", color: "#2E7D32" }} />
+              <span>256-bit SSL Encrypted</span>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit}>

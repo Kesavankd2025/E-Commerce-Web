@@ -1,46 +1,64 @@
-import { useState, useEffect, useRef } from "react";
-import banner2 from "../assets/banner2.png";
+import { useEffect, useRef, useState } from "react";
 import Icon from "../components/Icon";
 import TrendingCard from "../components/TrendingCard";
 import RecentlyAddedCard from "../components/RecentlyAddedCard";
 import { CATEGORIES, TRENDING_PRODUCTS, RECENTLY_ADDED, HIGHLIGHTS } from "../data/data";
 
-const HomePage = ({ setPage, addToCart }) => {
-  const [currentBanner, setCurrentBannerIndex] = useState(0);
-  const [activeFilter, setActiveFilter] = useState("All Products");
+const HomePage = ({ setPage }) => {
+  const categoriesRef = useRef(null);
+  const isPausedRef = useRef(false);
+  const isCtaPausedRef = useRef(false);
+  const recentlyRef = useRef(null);
+  const isRecentlyPausedRef = useRef(false);
+  const isRecentCtaPausedRef = useRef(false);
 
-  const BANNERS = [
+  const [activeSlide, setActiveSlide] = useState(0);
+  const slides = [
     {
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA85xwBWdVSj0_apU1tRtyDAWP0iyNylWao3lJRqasVMJA9y8JGGRGSMx8zyIuq7J72Ud2OgEjQtb-T8xwwAXGwbM1EnDTwTUUWkzP1NzgzvbePEyqOEZccQvw4K--r3WjppxZtR-d2df8M1E54TXkNRwHughaGF2WA5nvNvQvcfd99ki20y8w3AC__VnpLzQPDBTPs9IsRIZghtUck2rMRkX7ouwvHhvcO1qD7ZjzgOuHHhV1I0v4ZhRdXmmdb25DllFENC4IjHR8",
       badge: "New Season Arrival",
-      title: "The Ethereal Collection",
+      title: <>The Ethereal <br /><span className="hero-title-accent">Collection</span></>,
       subtitle: "Discover curated pieces that blend architectural strength with fluid grace. Elevate your everyday silhouette with our latest atelier arrivals.",
-      accent: "Collection"
+      img: "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071&auto=format&fit=crop",
     },
     {
-      img: banner2,
-      badge: "Specialized Atelier",
-      title: "Natural Essence Collection",
-      subtitle: "Experience the purity of nature through our curated skincare and atelier pieces. Crafted with organic materials for a sustainable future.",
-      accent: "Essence"
+      badge: "Atelier Edit",
+      title: <>Sculpted <br /><span className="hero-title-accent">Silhouettes</span></>,
+      subtitle: "A study in refined luxury. Explore our signature tailored essentials that transcend the seasons through impeccable craftsmanship.",
+      img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop",
     }
   ];
 
+  const pauseTimeoutRef = useRef(null);
+  const recentPauseTimeoutRef = useRef(null);
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentBannerIndex((prev) => (prev + 1) % BANNERS.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [BANNERS.length]);
+    const slideTimer = setInterval(() => {
+      setActiveSlide(prev => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 6000);
+    return () => clearInterval(slideTimer);
+  }, []);
 
-  const nextBanner = () => setCurrentBannerIndex((prev) => (prev + 1) % BANNERS.length);
-  const prevBanner = () => setCurrentBannerIndex((prev) => (prev - 1 + BANNERS.length) % BANNERS.length);
+  useEffect(() => {
+    const el = categoriesRef.current;
+    if (!el) return;
 
-  const recentlyRef = useRef(null);
-  const isRecentlyPausedRef = useRef(false);
-  const premiumCatRef = useRef(null);
-  const isPremiumPausedRef = useRef(false);
+    let rafId;
+    const speed = 0.4;
 
+    const tick = () => {
+      if (!el) return;
+      if (!isPausedRef.current && !isCtaPausedRef.current) {
+        el.scrollLeft += speed;
+        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
+          el.scrollLeft = 0;
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
 
   useEffect(() => {
     const el = recentlyRef.current;
@@ -51,7 +69,7 @@ const HomePage = ({ setPage, addToCart }) => {
 
     const tick = () => {
       if (!el) return;
-      if (!isRecentlyPausedRef.current) {
+      if (!isRecentlyPausedRef.current && !isRecentCtaPausedRef.current) {
         el.scrollLeft += speed;
         if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
           el.scrollLeft = 0;
@@ -64,225 +82,137 @@ const HomePage = ({ setPage, addToCart }) => {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
-  useEffect(() => {
-    const el = premiumCatRef.current;
+  const scrollCategories = (direction) => {
+    const el = categoriesRef.current;
     if (!el) return;
 
-    let rafId;
-    const speed = 0.4;
+    // Pause auto-scroll to allow smooth manual scroll
+    isCtaPausedRef.current = true;
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => {
+      isCtaPausedRef.current = false;
+    }, 2000);
 
-    const tick = () => {
-      if (!el) return;
-      if (!isPremiumPausedRef.current) {
-        el.scrollLeft += speed;
-        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
-          el.scrollLeft = 0;
-        }
-      }
-      rafId = requestAnimationFrame(tick);
-    };
+    // Calculate exact scroll distance dynamically to prevent orphan-half views
+    let amount = 320;
+    const firstChild = el.firstElementChild;
+    const secondChild = firstChild?.nextElementSibling;
+    if (firstChild && secondChild) {
+      amount = secondChild.offsetLeft - firstChild.offsetLeft;
+    } else if (firstChild) {
+      amount = firstChild.offsetWidth + 24; // fallback gap
+    }
+    
+    // Scroll exact amount
+    el.scrollBy({ left: direction * amount, behavior: "smooth" });
+  };
 
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
-  const scrollPremiumCategories = (direction) => {
-    const el = premiumCatRef.current;
+  const scrollRecently = (direction) => {
+    const el = recentlyRef.current;
     if (!el) return;
-    const amount = 300 * direction;
-    el.scrollBy({ left: amount, behavior: "smooth" });
+
+    isRecentCtaPausedRef.current = true;
+    if (recentPauseTimeoutRef.current) clearTimeout(recentPauseTimeoutRef.current);
+    recentPauseTimeoutRef.current = setTimeout(() => {
+      isRecentCtaPausedRef.current = false;
+    }, 2000);
+
+    // Calculate exact scroll distance dynamically to prevent orphan-half views
+    let amount = 320;
+    const firstChild = el.firstElementChild;
+    const secondChild = firstChild?.nextElementSibling;
+    if (firstChild && secondChild) {
+      amount = secondChild.offsetLeft - firstChild.offsetLeft;
+    } else if (firstChild) {
+      amount = firstChild.offsetWidth + 24; // fallback gap
+    }
+    
+    // Scroll exact amount
+    el.scrollBy({ left: direction * amount, behavior: "smooth" });
   };
 
   return (
     <main className="home-main">
-      {/* Hero Banner */}
+      {/* Hero Banner Area */}
       <section className="hero-section">
-        <div className="hero-shell">
+        {slides.map((slide, sIdx) => (
           <div
-            className="hero-overlay"
+            key={sIdx}
+            className={`hero-shell ${activeSlide === sIdx ? "active" : ""}`}
             style={{
-              background:
-                "linear-gradient(to right, rgba(241, 64, 100, 0.4), rgba(255, 180, 196, 0.2))",
+              opacity: activeSlide === sIdx ? 1 : 0,
+              visibility: activeSlide === sIdx ? "visible" : "hidden",
+              transition: "opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
+              position: sIdx === 0 ? "relative" : "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%"
             }}
-          />
-          <img
-            className="hero-image"
-            src={BANNERS[currentBanner].img}
-            alt="Hero"
-            style={{ transition: 'opacity 0.8s ease-in-out' }}
-          />
-          <div className="hero-content">
-            <span className="hero-badge">{BANNERS[currentBanner].badge}</span>
-            <h1 className="hero-title">
-              {BANNERS[currentBanner].title.replace(BANNERS[currentBanner].accent, "")} <br />
-              <span className="hero-title-accent">{BANNERS[currentBanner].accent}</span>
-            </h1>
-            <p className="hero-subtitle">
-              {BANNERS[currentBanner].subtitle}
-            </p>
-            <button
-              onClick={() => setPage("shop")}
-              className="hero-button"
-              style={{ background: "linear-gradient(135deg, rgb(241, 64, 100) 0%, rgb(255, 120, 150) 100%)" }}
-            >
-              Shop Now
-            </button>
-          </div>
-
-          <div className="hero-arrows">
-            <button
-              className="hero-arrow"
-              onClick={prevBanner}
-              style={{
-                borderColor: "rgba(255,255,255,0.3)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <Icon name="chevron_left" />
-            </button>
-            <button
-              className="hero-arrow"
-              onClick={nextBanner}
-              style={{
-                borderColor: "rgba(255,255,255,0.3)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <Icon name="chevron_right" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Specialized Ateliers (Categories) */}
-      <section className="premium-categories-section">
-        <div className="premium-categories-header">
-          <div className="premium-categories-title-wrap">
-            <div className="premium-categories-dots">
-              <span className="dot active"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-            </div>
-            <h2 className="premium-categories-title">Specialized Ateliers</h2>
-          </div>
-          <div className="section-actions">
-            {["arrow_back", "arrow_forward"].map((icon) => (
-              <button
-                key={icon}
-                className="section-action-button"
-                onClick={() => scrollPremiumCategories(icon === "arrow_back" ? -1 : 1)}
-                style={{ background: "#fff", border: "1px solid #eee" }}
-              >
-                <Icon name={icon} style={{ color: "#111", fontSize: "20px" }} />
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div
-          ref={premiumCatRef}
-          onMouseEnter={() => (isPremiumPausedRef.current = true)}
-          onMouseLeave={() => (isPremiumPausedRef.current = false)}
-          className="premium-categories-row"
-        >
-          {CATEGORIES.map((cat, idx) => (
-            <div 
-              key={cat.name + idx} 
-              className="premium-category-card"
-              onClick={() => setPage("shop")}
-            >
-              <div className="premium-category-image-wrap">
-                <img className="premium-category-image" src={cat.img} alt={cat.name} />
-              </div>
-              <h3 className="premium-category-name">{cat.name}</h3>
-              <span className="premium-category-link">Shop Collection</span>
-            </div>
-          ))}
-          {/* Duplicate for better filling if needed */}
-          {CATEGORIES.map((cat, idx) => (
-            <div 
-              key={cat.name + "dup" + idx} 
-              className="premium-category-card"
-              onClick={() => setPage("shop")}
-            >
-              <div className="premium-category-image-wrap">
-                <img className="premium-category-image" src={cat.img} alt={cat.name} />
-              </div>
-              <h3 className="premium-category-name">{cat.name}</h3>
-              <span className="premium-category-link">Shop Collection</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Trending Products (Top selling Categories) */}
-      <section className="trending-section" style={{ background: "#fef2f4" }}>
-        <div className="trending-wrap">
-          <div className="trending-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
-            <div>
-              <span className="trending-kicker" style={{ color: '#F14064', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '12px' }}>Most Selling Items</span>
-              <h2 className="trending-title" style={{ fontSize: '32px', fontWeight: 700, margin: '8px 0 0' }}>Top selling Categories</h2>
-            </div>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              {["All Products", "Best Selling", "Top Rating"].map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setActiveFilter(f)}
-                  style={{
-                    backgroundColor: activeFilter === f ? '#F14064' : '#000',
-                    color: '#fff',
-                    borderRadius: '20px',
-                    padding: '8px 24px',
-                    border: 'none',
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="trending-grid">
-            {TRENDING_PRODUCTS.slice(0, activeFilter === "All Products" ? 8 : 4).map((p, idx) => (
-              <TrendingCard key={p.name + idx} product={{...p, img: banner2}} setPage={setPage} addToCart={addToCart} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Recently Added (Arrivals Banner) */}
-      <section className="arrival-section">
-        <div className="arrival-banner">
-          <div className="arrival-banner-header">
-            <h2 className="arrival-banner-title">Fresh Arrivals</h2>
-            <button className="arrival-banner-arrow" onClick={() => setPage("shop")}>
-              <Icon name="arrow_forward" style={{ fontSize: 20, color: "#fff" }} />
-            </button>
-          </div>
-          
-          <div className="arrival-products-wrap">
+          >
             <div
-              ref={recentlyRef}
-              onMouseEnter={() => {
-                isRecentlyPausedRef.current = true;
+              className="hero-overlay"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%)",
               }}
-              onMouseLeave={() => {
-                isRecentlyPausedRef.current = false;
+            />
+            <img
+              className="hero-image"
+              src={slide.img}
+              alt="Hero"
+              style={{
+                transform: activeSlide === sIdx ? "scale(1)" : "scale(1.05)",
+                transition: "transform 8s linear"
               }}
-              className="arrival-row"
-              style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
-            >
-              {RECENTLY_ADDED.map((p) => (
-                <div key={p.name} className="recent-item">
-                  <RecentlyAddedCard product={p} setPage={setPage} addToCart={addToCart} />
-                </div>
-              ))}
+            />
+            <div className="hero-content">
+              <span className="hero-badge">{slide.badge}</span>
+              <h1 className="hero-title">{slide.title}</h1>
+              <p className="hero-subtitle">{slide.subtitle}</p>
+              <button
+                onClick={() => setPage("shop")}
+                className="hero-button"
+                style={{ background: "linear-gradient(135deg, #6250ae 0%, #c5b8ff 100%)" }}
+              >
+                Shop Now
+              </button>
             </div>
           </div>
+        ))}
+
+        <div className="hero-arrows">
+          <button
+            className="hero-arrow"
+            onClick={() => setActiveSlide(prev => prev === 0 ? slides.length - 1 : prev - 1)}
+            style={{
+              borderColor: "rgba(255,255,255,0.3)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <Icon name="chevron_left" />
+          </button>
+          <button
+            className="hero-arrow"
+            onClick={() => setActiveSlide(prev => prev === slides.length - 1 ? 0 : prev + 1)}
+            style={{
+              borderColor: "rgba(255,255,255,0.3)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <Icon name="chevron_right" />
+          </button>
+        </div>
+
+        {/* Slide Indicators */}
+        <div className="slide-indicators">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              className={`slide-dot ${activeSlide === i ? "active" : ""}`}
+              onClick={() => setActiveSlide(i)}
+            />
+          ))}
         </div>
       </section>
 
@@ -295,16 +225,122 @@ const HomePage = ({ setPage, addToCart }) => {
               className="highlight-card"
               style={{
                 background: h.light
-                  ? "linear-gradient(135deg, rgb(255, 240, 242) 0%, #fbf9fb 100%)"
+                  ? "linear-gradient(135deg, #f7e1d7 0%, #fbf9fb 100%)"
                   : "#f4f3f5",
                 border: "1px solid rgba(177,178,181,0.1)",
               }}
             >
               <div className="highlight-icon">
-                <Icon name={h.icon} style={{ color: "var(--accent)", fontSize: "28px" }} />
+                <Icon name={h.icon} style={{ color: "#6250ae", fontSize: "28px" }} />
               </div>
               <h4 className="highlight-title">{h.title}</h4>
               <p className="highlight-desc">{h.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Curated Categories */}
+      <section className="categories-section">
+        <div className="section-header">
+          <div>
+            <h2 className="section-title">Curated Categories</h2>
+            <p className="section-subtitle">
+              Explore our specialized ateliers by category
+            </p>
+          </div>
+          <div
+            className="section-actions"
+            onMouseEnter={() => (isCtaPausedRef.current = true)}
+            onMouseLeave={() => (isCtaPausedRef.current = false)}
+          >
+            {["arrow_back", "arrow_forward"].map((icon) => (
+              <button
+                key={icon}
+                className="section-action-button"
+                onClick={() => scrollCategories(icon === "arrow_back" ? -1 : 1)}
+              >
+                <Icon name={icon} />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div
+          ref={categoriesRef}
+          onMouseEnter={() => {
+            isPausedRef.current = true;
+          }}
+          onMouseLeave={() => {
+            isPausedRef.current = false;
+          }}
+          className="categories-row"
+          style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
+        >
+          {[...CATEGORIES, ...CATEGORIES].map((cat, idx) => (
+            <div key={cat.name + idx} className="category-card">
+              <div className="category-image-wrap">
+                <img className="category-image" src={cat.img} alt={cat.name} />
+              </div>
+              <h3 className="category-name">{cat.name}</h3>
+              <p className="category-count">{cat.count} Items</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trending Products */}
+      <section className="trending-section" style={{ background: "#f4f3f5" }}>
+        <div className="trending-wrap">
+          <div className="trending-header">
+            <span className="trending-kicker">Shop the Look</span>
+            <h2 className="trending-title">Trending Now</h2>
+          </div>
+          <div className="trending-grid">
+            {TRENDING_PRODUCTS.map((p) => (
+              <TrendingCard key={p.name} product={p} setPage={setPage} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recently Added */}
+      <section className="recent-section">
+        <div className="recent-header">
+          <div>
+            <span className="recent-kicker">Fresh Arrivals</span>
+            <h2 className="recent-title">Recently Added</h2>
+          </div>
+          <div
+            className="section-actions"
+            onMouseEnter={() => (isRecentCtaPausedRef.current = true)}
+            onMouseLeave={() => (isRecentCtaPausedRef.current = false)}
+          >
+            {["arrow_back", "arrow_forward"].map((icon) => (
+              <button
+                key={icon}
+                className="section-action-button"
+                onClick={() => scrollRecently(icon === "arrow_back" ? -1 : 1)}
+              >
+                <Icon name={icon} />
+              </button>
+            ))}
+          </div>
+        </div>
+        <div
+          ref={recentlyRef}
+          onMouseEnter={() => {
+            isRecentlyPausedRef.current = true;
+          }}
+          onMouseLeave={() => {
+            isRecentlyPausedRef.current = false;
+          }}
+          className="recent-row"
+          style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
+        >
+          {RECENTLY_ADDED.map((p) => (
+            <div key={p.name} className="recent-item">
+              <RecentlyAddedCard product={p} setPage={setPage} />
             </div>
           ))}
         </div>
@@ -331,7 +367,7 @@ const HomePage = ({ setPage, addToCart }) => {
                 <button
                   onClick={() => setPage("product")}
                   className="premium-primary"
-                  style={{ background: "linear-gradient(135deg, rgb(241, 64, 100) 0%, rgb(255, 120, 150) 100%)" }}
+                  style={{ background: "linear-gradient(135deg, #6250ae 0%, #c5b8ff 100%)" }}
                 >
                   Shop the Piece
                 </button>
@@ -376,4 +412,3 @@ const HomePage = ({ setPage, addToCart }) => {
 };
 
 export default HomePage;
-

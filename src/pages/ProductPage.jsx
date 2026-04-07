@@ -1,54 +1,33 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Icon from "../components/Icon";
 import RelatedCard from "../components/RelatedCard";
 import { PRODUCT_THUMBS, PRODUCT_MAIN_IMG, RELATED_PRODUCTS } from "../data/data";
 
 const FINISHES = ["#1a1a1a", "#f4f3f5", "#c5b8ff"];
-const SIZES = ["S", "M", "X", "L", "XL"];
+const SIZES = ["S", "M", "L", "XL"];
 const TABS = ["Description", "Specifications", "Shipping & Returns"];
 
-const ProductPage = ({ setPage, addToCart }) => {
+const ProductPage = ({ setPage, addToCart, addToWishlist }) => {
   const [selectedThumb, setSelectedThumb] = useState(0);
   const [selectedFinish, setSelectedFinish] = useState(0);
   const [selectedSize, setSelectedSize] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
 
-  const relatedRef = useRef(null);
-  const isRelatedPausedRef = useRef(false);
-
-  useEffect(() => {
-    const el = relatedRef.current;
-    if (!el) return;
-
-    let rafId;
-    const speed = 0.35;
-
-    const tick = () => {
-      if (!el) return;
-      if (!isRelatedPausedRef.current) {
-        el.scrollLeft += speed;
-        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
-          el.scrollLeft = 0;
-        }
-      }
-      rafId = requestAnimationFrame(tick);
-    };
-
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
   const allImages = [PRODUCT_MAIN_IMG, ...PRODUCT_THUMBS];
 
-  const handleAddToCart = () => {
-    if (addToCart) {
-      addToCart({
-        name: "Midnight Saffron Eau de Parfum",
-        price: "₹185.00",
-        img: PRODUCT_MAIN_IMG,
-        size: SIZES[selectedSize]
-      });
-      alert("Added to cart!");
+  const handleAction = (type) => {
+    const productData = {
+      name: "Midnight Saffron Eau de Parfum",
+      price: "₹15,400",
+      img: allImages[0],
+      size: SIZES[selectedSize]
+    };
+
+    if (type === "cart" || type === "buy") {
+      if (addToCart) addToCart(productData);
+      if (type === "buy" && setPage) setPage("login");
+    } else if (type === "wishlist") {
+      if (addToWishlist) addToWishlist(productData);
     }
   };
 
@@ -76,7 +55,7 @@ const ProductPage = ({ setPage, addToCart }) => {
               onClick={() => setSelectedThumb(i)}
               className="product-thumb"
               style={{
-                outline: selectedThumb === i ? "2px solid var(--accent)" : "none",
+                outline: selectedThumb === i ? "2px solid #6250ae" : "none",
               }}
             >
               <img className="product-thumb-img" src={img} alt="" />
@@ -113,7 +92,7 @@ const ProductPage = ({ setPage, addToCart }) => {
             </div>
           </div>
 
-          <div className="product-price">₹185.00</div>
+          <div className="product-price">$185.00</div>
 
           <p className="product-description">
             A celestial blend of rare saffron, dark plum, and aged sandalwood.
@@ -134,7 +113,7 @@ const ProductPage = ({ setPage, addToCart }) => {
                     background: color,
                     outline:
                       selectedFinish === i
-                        ? "2px solid var(--accent)"
+                        ? "2px solid #6250ae"
                         : "1px solid #b1b2b5",
                     outlineOffset: selectedFinish === i ? "2px" : "0px",
                   }}
@@ -155,12 +134,12 @@ const ProductPage = ({ setPage, addToCart }) => {
                   style={{
                     border:
                       selectedSize === i
-                        ? "2px solid var(--accent)"
+                        ? "2px solid #6250ae"
                         : "1px solid #b1b2b5",
-                    color: selectedSize === i ? "var(--accent)" : "#5e5f62",
+                    color: selectedSize === i ? "#6250ae" : "#5e5f62",
                     background:
                       selectedSize === i
-                        ? "rgba(241, 64, 100, 0.05)"
+                        ? "rgba(98,80,174,0.05)"
                         : "transparent",
                     fontWeight: selectedSize === i ? 700 : 500,
                   }}
@@ -171,18 +150,28 @@ const ProductPage = ({ setPage, addToCart }) => {
             </div>
           </div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Restored & Prime Functional */}
           <div className="product-cta">
-            <button
-              onClick={handleAddToCart}
-              className="cta-primary"
-              style={{
-                background: "linear-gradient(to right, var(--accent), rgb(255, 120, 150))",
-              }}
+            <div className="cta-row">
+              <button
+                className="cta-primary"
+                onClick={() => handleAction("cart")}
+                style={{
+                  background: "linear-gradient(to right, #6250ae, #7b68cc)",
+                }}
+              >
+                Add to Cart
+              </button>
+              <button className="cta-wishlist" onClick={() => handleAction("wishlist")}>
+                <Icon name="favorite_border" />
+              </button>
+            </div>
+            <button 
+              className="cta-secondary"
+              onClick={() => handleAction("buy")}
             >
-              Add to Cart
+              Buy Now
             </button>
-            <button className="cta-secondary" onClick={() => setPage("checkout")}>Buy Now</button>
           </div>
 
           {/* Trust Badges */}
@@ -207,78 +196,89 @@ const ProductPage = ({ setPage, addToCart }) => {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="product-tabs">
-        <div
-          className="tab-row"
-          style={{ borderBottom: "1px solid rgba(177,178,181,0.1)" }}
-        >
-          {TABS.map((tab, i) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(i)}
-              className={activeTab === i ? "tab-button active" : "tab-button"}
-              style={{
-                fontWeight: activeTab === i ? 700 : 500,
-                color: activeTab === i ? "#313236" : "#5e5f62",
-                borderBottom:
-                  activeTab === i ? "2px solid var(--accent)" : "2px solid transparent",
-              }}
-            >
-              {tab}
-            </button>
-          ))}
+      {/* Bottom Section: Tabs + Buy Box */}
+      <div className="product-bottom-layout">
+        {/* Tabs */}
+        <div className="product-tabs">
+          <div
+            className="tab-row"
+            style={{ borderBottom: "1px solid rgba(177,178,181,0.1)" }}
+          >
+            {TABS.map((tab, i) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(i)}
+                className={activeTab === i ? "tab-button active" : "tab-button"}
+                style={{
+                  fontWeight: activeTab === i ? 700 : 500,
+                  color: activeTab === i ? "#313236" : "#5e5f62",
+                  borderBottom:
+                    activeTab === i
+                      ? "2px solid #6250ae"
+                      : "2px solid transparent",
+                }}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {activeTab === 0 && (
+            <div className="tab-content">
+              <p>
+                Midnight Saffron represents the pinnacle of IRIS's olfactory
+                craftsmanship. Each bottle is hand-poured in small batches,
+                ensuring the delicate balance of top notes - including bergamot
+                and cracked black pepper - is preserved until the moment of
+                application.
+              </p>
+              <p>
+                The heart reveals a complex tapestry of Bulgarian rose and
+                violet leaf, which slowly matures into the signature base of
+                rare Kashmiri saffron and smoky amberwood.
+              </p>
+              <ul className="detail-list">
+                {[
+                  {
+                    icon: "auto_awesome",
+                    title: "Concentration",
+                    value: "Eau de Parfum (22% Oil)",
+                  },
+                  {
+                    icon: "schedule",
+                    title: "Longevity",
+                    value: "8-10 Hours Wear Time",
+                  },
+                ].map((item) => (
+                  <li key={item.title} className="detail-item">
+                    <Icon name={item.icon} style={{ color: "#6250ae" }} />
+                    <div>
+                      <span className="detail-title">{item.title}</span>
+                      <span className="detail-value">{item.value}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {activeTab === 1 && (
+            <p className="tab-text">
+              Detailed specifications including dimensions, materials, and
+              certifications are available upon request. Each piece is
+              individually inspected prior to dispatch.
+            </p>
+          )}
+
+          {activeTab === 2 && (
+            <p className="tab-text">
+              Complimentary shipping on all orders. Returns accepted within 30
+              days of receipt. Items must be unused and in original packaging.
+              Please contact our atelier team for assistance.
+            </p>
+          )}
         </div>
 
-        {activeTab === 0 && (
-          <div className="tab-content">
-            <p>
-              Midnight Saffron represents the pinnacle of IRIS's olfactory
-              craftsmanship. Each bottle is hand-poured in small batches, ensuring
-              the delicate balance of top notes - including bergamot and cracked
-              black pepper - is preserved until the moment of application.
-            </p>
-            <p>
-              The heart reveals a complex tapestry of Bulgarian rose and violet
-              leaf, which slowly matures into the signature base of rare Kashmiri
-              saffron and smoky amberwood.
-            </p>
-            <ul className="detail-list">
-              {[
-                {
-                  icon: "auto_awesome",
-                  title: "Concentration",
-                  value: "Eau de Parfum (22% Oil)",
-                },
-                { icon: "schedule", title: "Longevity", value: "8-10 Hours Wear Time" },
-              ].map((item) => (
-                <li key={item.title} className="detail-item">
-                  <Icon name={item.icon} style={{ color: "var(--accent)" }} />
-                  <div>
-                    <span className="detail-title">{item.title}</span>
-                    <span className="detail-value">{item.value}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {activeTab === 1 && (
-          <p className="tab-text">
-            Detailed specifications including dimensions, materials, and
-            certifications are available upon request. Each piece is individually
-            inspected prior to dispatch.
-          </p>
-        )}
-
-        {activeTab === 2 && (
-          <p className="tab-text">
-            Complimentary shipping on all orders. Returns accepted within 30 days
-            of receipt. Items must be unused and in original packaging. Please
-            contact our atelier team for assistance.
-          </p>
-        )}
       </div>
 
       {/* Related Products */}
@@ -292,17 +292,9 @@ const ProductPage = ({ setPage, addToCart }) => {
             View Boutique
           </a>
         </div>
-        <div 
-          ref={relatedRef}
-          onMouseEnter={() => { isRelatedPausedRef.current = true; }}
-          onMouseLeave={() => { isRelatedPausedRef.current = false; }}
-          className="related-row"
-          style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
-        >
-          {[...RELATED_PRODUCTS, ...RELATED_PRODUCTS].map((p, idx) => (
-            <div key={`${p.name}-${idx}`} className="related-item-wrap">
-              <RelatedCard product={p} addToCart={addToCart} />
-            </div>
+        <div className="related-grid">
+          {RELATED_PRODUCTS.map((p) => (
+            <RelatedCard key={p.name} product={p} />
           ))}
         </div>
       </div>

@@ -1,0 +1,266 @@
+/* Wishlist - Prime Executive Experience */
+.wishlist-main {
+  padding: 140px 40px 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.wishlist-header {
+  position: relative;
+  margin-bottom: 100px;
+  padding: 100px 0;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 40px;
+  background: #fbfbfc;
+}
+
+.wishlist-header-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(98, 80, 174, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.wishlist-header-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wishlist-eyebrow {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.wishlist-title {
+  font-family: "Playfair Display", serif;
+  font-size: 80px;
+  line-height: 1.1;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
+}
+
+.wishlist-title-alt {
+  font-style: italic;
+  font-weight: 400;
+  color: #313236;
+}
+
+.wishlist-subtitle {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #5e5f62;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Empty State */
+.wishlist-empty {
+  text-align: center;
+  padding: 120px 0;
+}
+
+.empty-symbol {
+  margin-bottom: 40px;
+}
+
+.empty-title {
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.empty-text {
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  color: #5e5f62;
+  margin-bottom: 48px;
+}
+
+.empty-prime-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 36px;
+  background: #1a1a1a;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.empty-prime-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid & Cards */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .wishlist-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .wishlist-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.wishlist-prime-card {
+  background: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(177, 178, 181, 0.2);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.wishlist-prime-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+}
+
+.wishlist-prime-media {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+}
+
+.wishlist-prime-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wishlist-prime-overlay {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wishlist-prime-card:hover .wishlist-prime-overlay {
+  opacity: 1;
+}
+
+.wishlist-action-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.8);
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.wishlist-action-btn:hover {
+  background: #ffffff;
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.wishlist-prime-info {
+  padding: 32px;
+}
+
+.info-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.wishlist-prime-name {
+  font-family: "Outfit", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.wishlist-prime-price {
+  font-family: "Outfit", sans-serif;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.wishlist-prime-size {
+  font-size: 14px;
+  color: #5e5f62;
+  margin-bottom: 24px;
+}
+
+.wishlist-prime-btn-main {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--accent);
+  background: rgba(98, 80, 174, 0.02);
+  color: var(--accent);
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wishlist-prime-btn-main:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.wishlist-footer {
+  margin-top: 120px;
+  text-align: center;
+}
+
+.wishlist-footer-divider {
+  width: 120px;
+  height: 1px;
+  background: rgba(177, 178, 181, 0.3);
+  margin: 0 auto 32px;
+}
+
+.wishlist-footer-note {
+  font-size: 14px;
+  color: #94a3b8;
+  max-width: 400px;
+  margin: 0 auto;
+}

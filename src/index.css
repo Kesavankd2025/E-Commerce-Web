@@ -1,8 +1,13 @@
 @import "./styles/base.css";
 @import "./styles/navbar.css";
+@import "./styles/footer.css";
+@import "./styles/cards.css";
+@import "./styles/auth.css";
 @import "./styles/home.css";
 @import "./styles/shop.css";
 @import "./styles/product.css";
 @import "./styles/cart.css";
+@import "./styles/wishlist.css";
+@import "./styles/profile.css";
+@import "./styles/toast.css";
 @import "./styles/checkout.css";
-@import "./styles/footer.css";

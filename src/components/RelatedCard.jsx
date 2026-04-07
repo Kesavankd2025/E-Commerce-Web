@@ -1,6 +1,6 @@
 import Icon from "./Icon";
 
-const RelatedCard = ({ product, addToCart }) => {
+const RelatedCard = ({ product }) => {
   return (
     <div className="related-card">
       <div
@@ -12,10 +12,6 @@ const RelatedCard = ({ product, addToCart }) => {
           alt={product.name}
         />
         <button
-          onClick={() => {
-            if (addToCart) addToCart(product);
-            alert("Added to cart!");
-          }}
           className="related-add"
           style={{
             background: "rgba(255,255,255,0.9)",
@@ -26,7 +22,7 @@ const RelatedCard = ({ product, addToCart }) => {
         </button>
       </div>
 
-      <h4 className="related-title">
+      <h4 className="related-card-name">
         {product.name}
       </h4>
       <p className="related-price">

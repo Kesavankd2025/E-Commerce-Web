@@ -47,20 +47,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Policies */}
-        <div>
-          <h4 className="footer-title">Policies</h4>
-          <ul className="footer-links">
-            {["Return Policy", "Privacy Policy", "Refund Policy", "Cancellation Policy"].map((item) => (
-              <li key={item}>
-                <a href="#" className="footer-link">
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {/* Newsletter */}
         <div>
           <h4 className="footer-title">Newsletter</h4>
@@ -76,7 +62,7 @@ const Footer = () => {
 
       {/* Bottom bar */}
       <div className="footer-bottom">
-        <span>(c) 2024 IRIS. All rights reserved.</span>
+        <span>(c) 2026 IRIS. All rights reserved.</span>
         <div className="footer-bottom-links">
           {["Privacy Policy", "Terms of Service"].map((l) => (
             <a key={l} href="#" className="footer-bottom-link">
